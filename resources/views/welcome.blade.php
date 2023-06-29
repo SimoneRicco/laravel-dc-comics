@@ -8,6 +8,6 @@
     </head>
     <body>
         <h1 class="text-center">Ciao da vite</h1>
-        {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
+        @dd($comics)
     </body>
 </html>
