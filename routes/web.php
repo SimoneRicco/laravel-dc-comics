@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Guest\PageController;
+use App\Http\Controllers\Guest\ComicController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +13,4 @@ use App\Http\Controllers\Guest\PageController;
 |
 */
 
-Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/', [ComicController::class, 'index'])->name('home');
