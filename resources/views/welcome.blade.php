@@ -33,9 +33,9 @@
                     <td>{{ $item['sale_date'] }}</td>
                     <td>{{ $item['type'] }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary">View</button>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <a type="button" class="btn btn-primary" href="{{ route('comics.show', ['comic' => $item->id]) }}">View</a>
+                        <a type="button" class="btn btn-warning">Edit</a>
+                        <a type="button" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 @endforeach
