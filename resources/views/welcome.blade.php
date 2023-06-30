@@ -7,6 +7,7 @@
         @vite('resources/js/app.js')
     </head>
     <body>
+        <a class="btn btn-primary" href="{{ route('comics.create') }}">Nuovo</a>
         <table class="table table-hover table-bordered">
             <thead>
               <tr>

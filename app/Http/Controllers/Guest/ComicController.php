@@ -38,7 +38,33 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'           => 'string',
+            'description'        => 'string',
+            'thumb'          => 'string',
+            'price'       => 'string',
+            'series'          => 'string',
+            'sale_date'   => 'string',
+            'type'   => 'string',
+        ]);
+
+        $data = $request->all();
+
+        // salvare i dati nel database
+        $newPasta = new Comic();
+        $newPasta->title = $data['title'];
+        $newPasta->description = $data['description'];
+        $newPasta->thumb = $data['thumb'];
+        $newPasta->price = $data['price'];
+        $newPasta->series = $data['series'];
+        $newPasta->sale_date = $data['sale_date'];
+        $newPasta->type = $data['type'];
+        $newPasta->save();
+
+        // $newPasta = Pasta::create($data);
+
+        // return 'scommentare se serve debuggare questo metodo';
+        return redirect()->route('comics.show', ['comic' => $newPasta->id]);
     }
 
     /**
