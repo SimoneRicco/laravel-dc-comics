@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class ComicController extends Controller
 {
+    private $validations = [
+        'title'           => 'string',
+        'description'        => 'string|max:1000',
+        'thumb'          => 'string|max:500',
+        'price'       => 'string',
+        'series'          => 'string',
+        'sale_date'   => 'string',
+        'type'   => 'string',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -38,33 +47,25 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title'           => 'string',
-            'description'        => 'string',
-            'thumb'          => 'string',
-            'price'       => 'string',
-            'series'          => 'string',
-            'sale_date'   => 'string',
-            'type'   => 'string',
-        ]);
+        $request->validate($this->validations);
 
         $data = $request->all();
 
         // salvare i dati nel database
-        $newPasta = new Comic();
-        $newPasta->title = $data['title'];
-        $newPasta->description = $data['description'];
-        $newPasta->thumb = $data['thumb'];
-        $newPasta->price = $data['price'];
-        $newPasta->series = $data['series'];
-        $newPasta->sale_date = $data['sale_date'];
-        $newPasta->type = $data['type'];
-        $newPasta->save();
+        $newComic = new Comic();
+        $newComic->title = $data['title'];
+        $newComic->description = $data['description'];
+        $newComic->thumb = $data['thumb'];
+        $newComic->price = $data['price'];
+        $newComic->series = $data['series'];
+        $newComic->sale_date = $data['sale_date'];
+        $newComic->type = $data['type'];
+        $newComic->save();
 
         // $newPasta = Pasta::create($data);
 
         // return 'scommentare se serve debuggare questo metodo';
-        return redirect()->route('comics.show', ['comic' => $newPasta->id]);
+        return redirect()->route('comics.show', ['comic' => $newComic->id]);
     }
 
     /**
@@ -86,7 +87,7 @@ class ComicController extends Controller
      */
     public function edit(Comic $comic)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -98,7 +99,22 @@ class ComicController extends Controller
      */
     public function update(Request $request, Comic $comic)
     {
-        //
+        // validare i dati
+        $request->validate($this->validations);
+
+        $data = $request->all();
+
+        //aggiornare i dati nel database
+        $comic->title = $data['title'];
+        $comic->description = $data['description'];
+        $comic->thumb = $data['thumb'];
+        $comic->price = $data['price'];
+        $comic->series = $data['series'];
+        $comic->sale_date = $data['sale_date'];
+        $comic->type = $data['type'];
+        $comic->update();
+
+        return to_route('comics.show', ['comic' => $comic->id]);
     }
 
     /**
@@ -109,6 +125,7 @@ class ComicController extends Controller
      */
     public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+        return to_route('comics.index');
     }
 }
